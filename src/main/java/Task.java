@@ -2,20 +2,22 @@ public class Task {
     private final String description;
     private boolean isDone;
 
-    Task(String description) {
+    public Task(String description) {
         this.description = description;
     }
 
-    void mark() {
+    public void mark() {
         this.isDone = true;
     }
 
-    void unmark() {
+    public void unmark() {
         this.isDone = false;
     }
 
-    String status() {
-        return isDone ? "[X]" : "[ ]";
+    public String status() {
+        return isDone
+                ? "[X]"
+                : "[ ]";
     }
 
     @Override

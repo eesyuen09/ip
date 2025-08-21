@@ -8,24 +8,20 @@ Got it. I've added this task:
 Now you have 1 tasks in the list.
 ____________________________________________________________________________
 ____________________________________________________________________________
-added: read book
-____________________________________________________________________________
-____________________________________________________________________________
 Got it. I've added this task:
 [D][ ] return book (by: June 6th)
-Now you have 3 tasks in the list.
+Now you have 2 tasks in the list.
 ____________________________________________________________________________
 ____________________________________________________________________________
 Got it. I've added this task:
 [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-Now you have 4 tasks in the list.
+Now you have 3 tasks in the list.
 ____________________________________________________________________________
 ____________________________________________________________________________
 Here are the tasks in your list:
 1. [T][ ] borrow book
-2. [ ] read book
-3. [D][ ] return book (by: June 6th)
-4. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+2. [D][ ] return book (by: June 6th)
+3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
 ____________________________________________________________________________
 ____________________________________________________________________________
 Nice! I've marked this task as done:

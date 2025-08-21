@@ -20,10 +20,14 @@ public class Penguin {
         reply(greetings);
         while (true) {
             String input = sc.nextLine();
-            Command cmd = parser.parse(input);
-            String out = cmd.execute(taskList);
-            reply(out);
-            if (cmd.intent() == Intent.BYE) break;
+            try {
+                Command cmd = parser.parse(input);
+                String out = cmd.execute(taskList);
+                reply(out);
+                if (cmd.intent() == Intent.BYE) break;
+            } catch (PenguinException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }

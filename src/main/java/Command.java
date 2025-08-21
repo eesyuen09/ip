@@ -1,4 +1,4 @@
-enum Intent { ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, UNKNOWN}
+enum Intent { ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, DELETE, UNKNOWN}
 
 public record Command(Intent intent, String args) {
     String execute(TaskList tasks) throws PenguinException {
@@ -7,6 +7,18 @@ public record Command(Intent intent, String args) {
                 Task t = new Task(args);
                 tasks.add(t);
                 return "added: " + args;
+            }
+            case DELETE -> {
+                if (args.isBlank()) {
+                    throw new PenguinException("Please provide a task number to delete.");
+                }
+                int idx = Integer.parseInt(args) - 1;
+                if (idx >= tasks.size()) {
+                    throw new PenguinException("Please provide a valid task number.");
+                }
+                Task t = tasks.get(idx);
+                tasks.delete(idx);
+                return "Noted. I've removed this task:\n" + t + "\nNow you have " + tasks.size() + " tasks in the list.";
             }
             case LIST -> {
                 return tasks.toString();

@@ -16,6 +16,10 @@ public class TaskList {
         return tasks.size();
     }
 
+    public void delete(int index){
+        tasks.remove(index);
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");

@@ -1,0 +1,3 @@
+T | 0 | read
+E | 0 | study  | 2  |  4
+D | 0 | essay | tmr

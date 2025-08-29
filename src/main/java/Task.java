@@ -6,6 +6,11 @@ public class Task {
         this.description = description;
     }
 
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
+    }
+
     public void mark() {
         this.isDone = true;
     }
@@ -18,6 +23,14 @@ public class Task {
         return isDone
                 ? "[X]"
                 : "[ ]";
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override

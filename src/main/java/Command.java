@@ -21,7 +21,8 @@ public record Command(Intent intent, String args) {
                 return "Noted. I've removed this task:\n" + t + "\nNow you have " + tasks.size() + " tasks in the list.";
             }
             case LIST -> {
-                return tasks.toString();
+                String str = "Here are the tasks in your list:\n";
+                return str + tasks.toString();
             }
             case MARK -> {
                 if (args.isBlank()) {
@@ -56,17 +57,17 @@ public record Command(Intent intent, String args) {
                 if (args.isBlank()) {
                     throw new PenguinException("Please specify what task you’d like to add as a deadline task.");
                 }
-                int idx = args.indexOf("/");
+                int idx = args.indexOf("by");
                 if (idx == -1) {
-                    throw new PenguinException("OOPS! A deadline task must include '/by <time>'. Example: deadline return book /by Sunday");
+                    throw new PenguinException("OOPS! A deadline task must include 'by <time>'. Example: deadline return book /by Sunday");
                 }
                 String desc = args.substring(0, idx - 1);
                 if (desc.isBlank()) {
-                    throw new PenguinException("OOPS! A deadline task must include a description before '/by <time>'. Example: deadline return book /by Sunday");
+                    throw new PenguinException("OOPS! A deadline task must include a description before 'by <time>'. Example: deadline return book /by Sunday");
                 }
-                String by = args.substring(idx + 4);
+                String by = args.substring(idx + 3);
                 if (by.equals("Sunday")) {
-                    throw new PenguinException("OOPS! A deadline task must include '/by <time>'. Example: deadline return book /by Sunday");
+                    throw new PenguinException("OOPS! A deadline task must include 'by <time>'. Example: deadline return book /by Sunday");
                 }
                 Task t = new Deadline(desc, by);
                 tasks.add(t);
@@ -76,12 +77,12 @@ public record Command(Intent intent, String args) {
                 if (args == null || args.isBlank()) {
                     throw new PenguinException("The event description cannot be empty.");
                 }
-                int fromIdx = args.indexOf("/from");
-                int toIdx = args.indexOf("/to");
+                int fromIdx = args.indexOf("from");
+                int toIdx = args.indexOf("to");
                 if (fromIdx == -1 || toIdx == -1) {
                     throw new PenguinException(
-                            "An event must include both '/from <start>' and '/to <end>'.\n" +
-                                    "Example: event project meeting /from Mon 2pm /to Mon 4pm"
+                            "An event must include both 'from <start>' and 'to <end>'.\n" +
+                                    "Example: event project meeting from Mon 2pm to Mon 4pm"
                     );
                 }
                 if (fromIdx > toIdx) {
@@ -89,8 +90,8 @@ public record Command(Intent intent, String args) {
                 }
 
                 String desc = args.substring(0, fromIdx);
-                String from = args.substring(fromIdx + 6, toIdx);
-                String to = args.substring(toIdx + 3);
+                String from = args.substring(fromIdx + 5, toIdx);
+                String to = args.substring(toIdx + 2);
                 if (desc.isBlank()) throw new PenguinException("The event description cannot be empty.");
                 if (from.isBlank()) throw new PenguinException("The event start time after '/from' cannot be empty.");
                 if (to.isBlank())   throw new PenguinException("The event end time after '/to' cannot be empty.");

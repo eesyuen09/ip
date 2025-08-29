@@ -1,36 +1,43 @@
-import java.util.Scanner;
-
 public class Penguin {
-    static final String greetings = "Hello! I'm Penguin!\nWhat can I do for you?";
-    static final String line = "____________________________________________________________________________";
-    static Scanner sc = new Scanner(System.in);
+    private final Storage storage;
+    private TaskList tasks;
+    private final Ui ui;
+    private final Parser parser;
 
-    public static void reply(String msg) {
-        System.out.println(line);
-        System.out.println(msg);
-        System.out.println(line);
+    public Penguin() {
+        ui = new Ui();
+        tasks = new TaskList();
+        storage = new Storage(tasks);
+        parser = new Parser();
+
+        try {
+            tasks = storage.load();
+        } catch (PenguinException e) {
+            tasks = new TaskList();
+        }
+
     }
 
-    public static void main(String[] args) throws PenguinException {
-        Parser parser = new Parser();
-        TaskList taskList = new TaskList();
-        Storage storage = new Storage(taskList);
-        reply(greetings);
-        taskList = storage.load();
+    public void run() {
+        ui.greet();
         while (true) {
-            String input = sc.nextLine();
+            String input = ui.readCommand();
             try {
                 Command cmd = parser.parse(input);
-                String out = cmd.execute(taskList);
-                if (taskList.isModified()) {
-                    storage.save(taskList);
-                    taskList.resetModification();
+                String out = cmd.execute(tasks);
+                if (tasks.isModified()) {
+                    storage.save(tasks);
+                    tasks.resetModification();
                 }
-                reply(out);
+                ui.reply(out);
                 if (cmd.intent() == Intent.BYE) break;
             } catch (PenguinException e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public static void main(String[] args) {
+        new Penguin().run();
     }
 }

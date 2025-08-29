@@ -1,7 +1,12 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class TaskCode {
     private static Task task;
     private static TaskList taskList;
     private static final String SEP = " | ";
+    private static final DateTimeFormatter IN_DATETIME =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
     public static String encode(Task t) {
         String done = t.isDone() ? "1" : "0";
@@ -10,9 +15,9 @@ public class TaskCode {
         if (t instanceof Todo) {
             return "T" + SEP + done + SEP + desc;
         } else if (t instanceof Deadline d) {
-            return "D" + SEP + done + SEP + desc + SEP + d.getBy();     // by as String
+            return "D" + SEP + done + SEP + desc + SEP + d.getByStorage();     // by as String
         } else if (t instanceof Event e) {
-            return "E" + SEP + done + SEP + desc + SEP + e.getFrom() + SEP + e.getTo();
+            return "E" + SEP + done + SEP + desc + SEP + e.getFromStorage() + SEP + e.getToStorage();
         }
         throw new IllegalArgumentException("Unknown task type: " + t.getClass());
     }
@@ -38,11 +43,14 @@ public class TaskCode {
 
             case "D":
                 if (p.length != 4) throw new PenguinException("Deadline task needs 4 fields: " + line);
-                return new Deadline(desc, done, p[3]); // by as String
+                LocalDateTime by = LocalDateTime.parse(p[3]);
+                return new Deadline(desc, done, by);
 
             case "E":
                 if (p.length != 5) throw new PenguinException("Event task needs 5 fields: " + line);
-                return new Event(desc, done, p[3], p[4]); // from, to as String
+                LocalDateTime from = LocalDateTime.parse(p[3]);
+                LocalDateTime to = LocalDateTime.parse(p[4]);
+                return new Event(desc, done, from, to);
 
             default:
                 throw new PenguinException("Unknown task type: " + type);

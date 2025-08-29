@@ -59,15 +59,15 @@ public record Command(Intent intent, String args) {
                 }
                 int idx = args.indexOf("by");
                 if (idx == -1) {
-                    throw new PenguinException("OOPS! A deadline task must include 'by <time>'. Example: deadline return book /by Sunday");
+                    throw new PenguinException("OOPS! A deadline task must include 'by <dd/MM/yyyy HHmm>'. Example: deadline return book by 09/09/2025 1800");
                 }
                 String desc = args.substring(0, idx - 1);
                 if (desc.isBlank()) {
-                    throw new PenguinException("OOPS! A deadline task must include a description before 'by <time>'. Example: deadline return book /by Sunday");
+                    throw new PenguinException("OOPS! A deadline task must include a description before 'by by <dd/MM/yyyy HHmm>'. Example: deadline return book by 09/09/2025 1800");
                 }
                 String by = args.substring(idx + 3);
                 if (by.equals("Sunday")) {
-                    throw new PenguinException("OOPS! A deadline task must include 'by <time>'. Example: deadline return book /by Sunday");
+                    throw new PenguinException("OOPS! A deadline task must include 'by 09/09/2025 1800'. Example: deadline return book by 09/09/2025 1800");
                 }
                 Task t = new Deadline(desc, by);
                 tasks.add(t);
@@ -82,19 +82,19 @@ public record Command(Intent intent, String args) {
                 if (fromIdx == -1 || toIdx == -1) {
                     throw new PenguinException(
                             "An event must include both 'from <start>' and 'to <end>'.\n" +
-                                    "Example: event project meeting from Mon 2pm to Mon 4pm"
+                                    "Example: event project meeting from 09/09/2025 1800 to 09/10/2025 1800"
                     );
                 }
                 if (fromIdx > toIdx) {
-                    throw new PenguinException("'/from' must come before '/to'.");
+                    throw new PenguinException("'from' must come before 'to'.");
                 }
 
-                String desc = args.substring(0, fromIdx);
-                String from = args.substring(fromIdx + 5, toIdx);
-                String to = args.substring(toIdx + 2);
+                String desc = args.substring(0, fromIdx).trim();
+                String from = args.substring(fromIdx + 4, toIdx).trim();
+                String to = args.substring(toIdx + 2).trim();
                 if (desc.isBlank()) throw new PenguinException("The event description cannot be empty.");
-                if (from.isBlank()) throw new PenguinException("The event start time after '/from' cannot be empty.");
-                if (to.isBlank())   throw new PenguinException("The event end time after '/to' cannot be empty.");
+                if (from.isBlank()) throw new PenguinException("The event start time after 'from' cannot be empty.");
+                if (to.isBlank())   throw new PenguinException("The event end time after 'to' cannot be empty.");
                 Task t = new Event(desc, from, to);
                 tasks.add(t);
                 return "Got it. I've added this task:\n" + t + "\nNow you have " + tasks.size() + " tasks in the list.";

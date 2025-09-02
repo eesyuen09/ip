@@ -3,9 +3,22 @@ package penguin.task;
 import penguin.exception.PenguinException;
 import java.time.LocalDateTime;
 
+
+/**
+ * Provides encoding and decoding of {@link Task} objects to and from
+ * their string representation for persistent storage.
+ * @author eesyuen
+ */
 public class TaskCode {
     private static final String SEP = " | ";
 
+    /**
+     * Encodes a Task into a storage string.
+     *
+     * @param t The task to encode.
+     * @return Encoded string representation of the task.
+     * @throws IllegalArgumentException If the task type is not recognized.
+     */
     public static String encode(Task t) {
         String done = t.isDone() ? "1" : "0";
         String desc = t.getDescription();
@@ -20,10 +33,21 @@ public class TaskCode {
         throw new IllegalArgumentException("Unknown task type: " + t.getClass());
     }
 
+    /**
+     * Decodes a line of text into a Task.
+     * Ignores null lines and empty lines."|" and reconstructs the
+     * appropriate Todo, Deadline or Event.
+     *
+     * @param line A storage line representing a task.
+     * @return A corresponding Task or null if the line is empty or a comment.
+     * @throws PenguinException If the line is malformed, the task type is unknown,
+     *                          or the field count is incorrect.
+     * @throws IllegalArgumentException If the "done" flag is not 0 or 1.
+     */
     public static Task decode(String line) throws PenguinException {
         if (line == null) return null;
         line = line.trim();
-        if (line.isEmpty() || line.startsWith("#")) return null;
+        if (line.isEmpty()) return null;
 
         String[] p = line.split(" \\| ");
         if (p.length < 3) {
@@ -55,6 +79,13 @@ public class TaskCode {
         }
     }
 
+    /**
+     * Parses the done flag from storage.
+     *
+     * @param s The string flag ("0" or "1").
+     * @return true if the flag is "1", false if "0".
+     * @throws IllegalArgumentException If the flag is not "0" or "1".
+     */
     private static boolean parseDone(String s) {
         if ("0".equals(s)) return false;
         if ("1".equals(s)) return true;

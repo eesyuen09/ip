@@ -3,13 +3,31 @@ package penguin.command;
 import penguin.exception.PenguinException;
 import penguin.task.*;
 
+enum Action { ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, DELETE, UNKNOWN}
 
-enum Intent { ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, DELETE, UNKNOWN}
-
-
-public record Command(Intent intent, String args) {
+/**
+ * Represents a command that is parsed from user's input.
+ * @param action indicates the type of action requested
+ * @param args description of the task
+ */
+public record Command(Action action, String args) {
+    /**
+     * Execute the action on the tasklist.
+     * The behavior depends on the Action:
+     * ADD: Adds a task to the tasklist.
+     * LIST: List all task in the tasklist.
+     * MARK: Mark the task on the index as done.
+     * UNMARK: Mark the task on the index as undone.
+     * BYE: Terminates the chatbot.
+     * TODO: Adds an undone TODO task to the tasklist.
+     * DEADLINE: Adds an undone DEADLINE task to the tasklist.
+     * EVENT: Adds an undone EVENT task to the tasklist.
+     * @param tasks Tasklist to be executed on.
+     * @return Response message for users.
+     * @throws PenguinException
+     */
     public String execute(TaskList tasks) throws PenguinException {
-        switch (intent) {
+        switch (action) {
             case ADD -> {
                 Task t = new Task(args);
                 tasks.add(t);

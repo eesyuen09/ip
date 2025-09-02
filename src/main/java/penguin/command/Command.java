@@ -7,7 +7,7 @@ import penguin.task.Task;
 import penguin.task.TaskList;
 import penguin.task.Todo;
 
-enum Action {ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, DELETE, UNKNOWN}
+enum Action {ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN}
 
 /**
  * Represents a command that is parsed from user's input.
@@ -30,7 +30,7 @@ public record Command(Action action, String args) {
      *
      * @param tasks Tasklist to be executed on.
      * @return Response message for users.
-     * @throws PenguinException
+     * @throws PenguinException If there are invalid arguments.
      */
     public String execute(TaskList tasks) throws PenguinException {
         switch (action) {
@@ -130,10 +130,28 @@ public record Command(Action action, String args) {
             tasks.add(t);
             return "Got it. I've added this task:\n" + t + "\nNow you have " + tasks.getSize() + " tasks in the list.";
         }
-        default -> {
+        case FIND -> {
+            if (args.isBlank()) {
+                throw new PenguinException("Please provide a keyword to search for.");
+            }
+            String keyword = args.trim().toLowerCase();
+            StringBuilder result = new StringBuilder("Here are the matching results in your list: \n");
+            boolean found = false;
+            for (int i = 0; i < tasks.getSize(); i++) {
+                Task task = tasks.get(i);
+                if (task.toString().toLowerCase().contains(keyword)) {
+                    result = result.append(i).append(". ").append(task).append("\n");
+                    found = true;
+                }
+            }
+            if (found) {
+                return result.toString();
+            } else {
+                return "There are no matching results in your list.";
+            }
+        }
+        default ->
             throw new PenguinException("Sorry, I don't understand that.");
         }
-        }
-
     }
 }

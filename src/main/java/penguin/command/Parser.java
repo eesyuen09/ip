@@ -28,6 +28,8 @@ public class Parser {
             return new Command(Action.EVENT, s.length() > 5 ? s.substring(6).trim() : "".trim());
         } else if (s.startsWith("delete")) {
             return new Command(Action.DELETE, s.length() > 6 ? s.substring(7).trim() : "".trim());
+        } else if (s.startsWith("find")) {
+            return new Command(Action.FIND, s.length() > 5 ? s.substring(6).trim() : "".trim());
         }
 
         return new Command(Action.UNKNOWN, s.trim());

@@ -37,7 +37,7 @@ public class Penguin {
      * parses it into command, execute the command
      * and replies with the result. If tasks are modified,
      * it will save the current task list to storage.
-     * The chatbot can be terminated bu running bye.
+     * The chatbot can be terminated by running bye.
      */
     public void run() {
         ui.greet();
@@ -63,11 +63,6 @@ public class Penguin {
         }
     }
 
-    /**
-     * Starts the application.
-     *
-     * @param args
-     */
     public static void main(String[] args) {
         new Penguin().run();
     }

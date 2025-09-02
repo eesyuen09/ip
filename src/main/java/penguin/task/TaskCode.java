@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 /**
  * Provides encoding and decoding of {@link Task} objects to and from
  * their string representation for persistent storage.
- * @author eesyuen
  */
 public class TaskCode {
     private static final String SEP = " | ";

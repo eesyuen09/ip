@@ -14,7 +14,6 @@ import java.util.Scanner;
 
 /**
  * Handles loading and storing task list to storage.
- * @author eesyuen
  */
 public class Storage {
     private final TaskList tasks;
@@ -27,6 +26,7 @@ public class Storage {
 
     /**
      * Saves a given tasklist to a storage file.
+     *
      * @param tasks Tasklist to be stored.
      * @throws PenguinException if an I/O error occurs while storing the file.
      */
@@ -51,6 +51,7 @@ public class Storage {
 
     /**
      * Loads tasks from the storage file and return the tasklist.
+     *
      * @return TaskList stored in storage or empty TaskList if no file exists.
      * @throws PenguinException if an I/O error occurs while storing the file.
      */

@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 /**
  * Represents an event task with a start and end LocalDateTime.
- * @author eesyuen
  */
 public class Event extends Task {
     private LocalDateTime from;
@@ -66,8 +65,6 @@ public class Event extends Task {
     /**
      * Returns a string representation of this event, including its description,
      * completion status, and start/end times.
-     * Format example:
-     *   [E][ ] project meeting (from: Sep 9 2025, 6:00PM to: Sep 9 2025, 8:00PM)
      *
      * @return String representation of this event.
      */

@@ -9,8 +9,6 @@ import penguin.ui.Ui;
 
 /**
  * The main entry point the Penguin application.
- *
- * @author eesyuen
  */
 public class Penguin {
     private final Storage storage;
@@ -67,6 +65,7 @@ public class Penguin {
 
     /**
      * Starts the application.
+     *
      * @param args
      */
     public static void main(String[] args) {

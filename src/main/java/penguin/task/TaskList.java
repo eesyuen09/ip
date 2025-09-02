@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * Represents a mutable list of Task objects.
- * @author eesyuen
  */
 public class TaskList {
     private final List<Task> tasks = new ArrayList<>();

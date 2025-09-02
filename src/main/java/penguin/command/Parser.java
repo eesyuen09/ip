@@ -2,11 +2,11 @@ package penguin.command;
 
 /**
  * Parses the user input into command.
- * @author eesyuen
  */
 public class Parser {
     /**
      * Parses the user input.
+     *
      * @param input
      * @return Command
      */

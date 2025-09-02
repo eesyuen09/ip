@@ -2,10 +2,8 @@ package penguin.task;
 
 /**
  * Represents a generic task with a description and a completion status.
- *
  * Subclasses such as Todo, Deadline and Event
  * extend this class to represent more specific task types.
- * @author eesyuen
  */
 public class Task {
     private final String description;
@@ -56,8 +54,6 @@ public class Task {
     /**
      * Returns a string representation of this task, including its status
      * and description.
-     *
-     * Example: {@code [X] finish assignment}
      *
      * @return String representation of this task.
      */

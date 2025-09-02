@@ -5,6 +5,10 @@ import penguin.command.DateTimeParser;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
+/**
+ * Represents an event task with a start and end LocalDateTime.
+ * @author eesyuen
+ */
 public class Event extends Task {
     private LocalDateTime from;
     private LocalDateTime to;
@@ -23,23 +27,50 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /**
+     * Returns the start time formatted for display.
+     *
+     * @return A string in the format {@code "MMM d yyyy, h:mma"}.
+     */
     public String getFromDisplay() {
         return from.format(OUT_DATETIME);
     }
 
+    /**
+     * Returns the start time in ISO-8601 storage format.
+     *
+     * @return A string such as {@code "2025-09-09T18:00"}.
+     */
     public String getFromStorage() {
         return from.toString();
     }
 
+    /**
+     * Returns the end time formatted for display.
+     *
+     * @return A string in the format {@code "MMM d yyyy, h:mma"}.
+     */
     public String getToDisplay() {
         return to.format(OUT_DATETIME);
     }
 
+    /**
+     * Returns the end time in ISO-8601 storage format.
+     *
+     * @return A string such as {@code "2025-09-09T20:00"}.
+     */
     public String getToStorage() {
         return to.toString();
     }
 
-
+    /**
+     * Returns a string representation of this event, including its description,
+     * completion status, and start/end times.
+     * Format example:
+     *   [E][ ] project meeting (from: Sep 9 2025, 6:00PM to: Sep 9 2025, 8:00PM)
+     *
+     * @return String representation of this event.
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + getFromDisplay() + " to: " + getToDisplay() + ")";

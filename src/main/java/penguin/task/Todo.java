@@ -1,5 +1,10 @@
 package penguin.task;
 
+/**
+ * Represents a Task of type "Todo".
+ * A Todo task only has a description and completion status,
+ * without any date/time fields.
+ */
 public class Todo extends Task {
 
     public Todo(String description) {

@@ -12,6 +12,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * Handles loading and storing task list to storage.
+ * @author eesyuen
+ */
 public class Storage {
     private final TaskList tasks;
     private final TaskCode code = new TaskCode();
@@ -21,6 +25,11 @@ public class Storage {
         this.tasks = tasks;
     }
 
+    /**
+     * Saves a given tasklist to a storage file.
+     * @param tasks Tasklist to be stored.
+     * @throws PenguinException if an I/O error occurs while storing the file.
+     */
     public void save (TaskList tasks) throws PenguinException {
         try {
             Files.createDirectories(DATA_FILE.getParent());
@@ -40,6 +49,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file and return the tasklist.
+     * @return TaskList stored in storage or empty TaskList if no file exists.
+     * @throws PenguinException if an I/O error occurs while storing the file.
+     */
     public TaskList load () throws PenguinException {
         TaskList tasks = new TaskList();
         try {

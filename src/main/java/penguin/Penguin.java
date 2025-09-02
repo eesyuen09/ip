@@ -7,6 +7,11 @@ import penguin.task.TaskList;
 import penguin.command.Parser;
 import penguin.ui.Ui;
 
+/**
+ * The main entry point the Penguin application.
+ *
+ * @author eesyuen
+ */
 public class Penguin {
     private final Storage storage;
     private TaskList tasks;
@@ -28,6 +33,14 @@ public class Penguin {
 
     }
 
+    /**
+     * Runs the main interaction of Penguin chatbot.
+     * It first greets the user, then continuously reads user input,
+     * parses it into command, execute the command
+     * and replies with the result. If tasks are modified,
+     * it will save the current task list to storage.
+     * The chatbot can be terminated bu running bye.
+     */
     public void run() {
         ui.greet();
         boolean isExit = false;
@@ -52,6 +65,10 @@ public class Penguin {
         }
     }
 
+    /**
+     * Starts the application.
+     * @param args
+     */
     public static void main(String[] args) {
         new Penguin().run();
     }

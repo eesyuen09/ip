@@ -5,6 +5,10 @@ import penguin.command.DateTimeParser;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
+/**
+ * Represents a task with a deadline(date & time).
+ * @author eesyuen
+ */
 public class Deadline extends Task {
     private LocalDateTime by;
 
@@ -21,10 +25,18 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * Returns the deadline with the correct output format.
+     * @return a String with the deadline of the correct format.
+     */
     public String getByDisplay() {
         return by.format(OUT_DATETIME);
     }
 
+    /**
+     * Returns the deadline with the correct storage format.
+     * @return a String with the deadline of the storage format.
+     */
     public String getByStorage() {
         return by.toString();
     }

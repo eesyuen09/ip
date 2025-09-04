@@ -8,7 +8,7 @@ import penguin.command.Parser;
 import penguin.ui.Ui;
 
 /**
- * The main entry point the Penguin application.
+ * The Penguin application.
  */
 public class Penguin {
     private final Storage storage;
@@ -29,38 +29,6 @@ public class Penguin {
         }
 
     }
-
-    /**
-     * Runs the main interaction of Penguin chatbot.
-     * It first greets the user, then continuously reads user input,
-     * parses it into command, execute the command
-     * and replies with the result. If tasks are modified,
-     * it will save the current task list to storage.
-     * The chatbot can be terminated by running bye.
-     */
-//    public void run() {
-//        ui.greet();
-//        boolean isExit = false;
-//        while (!isExit) {
-//            String input = ui.readCommand();
-//            try {
-//                Command cmd = parser.parse(input);
-//                String out = cmd.execute(tasks);
-//                if (tasks.isModified()) {
-//                    storage.save(tasks);
-//                    tasks.resetModification();
-//                }
-//                if (out == BYE) {
-//                    ui.reply(BYE);
-//                    isExit = true;
-//                } else {
-//                    ui.reply(out);
-//                }
-//            } catch (PenguinException e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-//    }
 
     /**
      * Generates a response for the user's chat message.

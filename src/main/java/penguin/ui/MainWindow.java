@@ -28,8 +28,8 @@ public class MainWindow extends AnchorPane {
 
     private Penguin penguin;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image penguinImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
+    private Image penguinImage = new Image(this.getClass().getResourceAsStream("/images/penguin.jpg"));
 
     private final String BYE = "Bye. Hope to see you again soon!";
 

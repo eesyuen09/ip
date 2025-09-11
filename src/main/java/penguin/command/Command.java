@@ -33,10 +33,13 @@ public record Command(Action action, String args) {
      * @throws PenguinException If there are invalid arguments.
      */
     public String execute(TaskList tasks) throws PenguinException {
+        assert tasks != null : "TaskList must not be null";
+        assert action != null : "Action must not be null";
         switch (action) {
         case ADD -> {
-            Task t = new Task(args);
-            tasks.add(t);
+            assert args != null && !args.isBlank() : "ADD requires a non-empty description";
+            Task task = new Task(args);
+            tasks.add(task);
             return "added: " + args;
         }
         case DELETE -> {
@@ -47,9 +50,9 @@ public record Command(Action action, String args) {
             if (idx >= tasks.getSize()) {
                 throw new PenguinException("Please provide a valid task number.");
             }
-            Task t = tasks.get(idx);
+            Task task = tasks.get(idx);
             tasks.delete(idx);
-            return "Noted. I've removed this task:\n" + t + "\nNow you have " + tasks.getSize() + " tasks in the list.";
+            return "Noted. I've removed this task:\n" + task + "\nNow you have " + tasks.getSize() + " tasks in the list.";
         }
         case LIST -> {
             String str = "Here are the tasks in your list:\n";
@@ -69,9 +72,9 @@ public record Command(Action action, String args) {
                 throw new PenguinException("Please provide a task number to unmark.");
             }
             int idx = Integer.parseInt(args) - 1;
-            Task task2 = tasks.get(idx);
-            task2.unmark();
-            return "OK, I've marked this task as not done yet:\n" + task2;
+            Task task = tasks.get(idx);
+            task.unmark();
+            return "OK, I've marked this task as not done yet:\n" + task;
         }
         case BYE -> {
             return "Bye. Hope to see you again soon!";
@@ -80,9 +83,9 @@ public record Command(Action action, String args) {
             if (args.isBlank()) {
                 throw new PenguinException("Please specify what task you’d like to add as a todo.");
             }
-            Task t = new Todo(args);
-            tasks.add(t);
-            return "Got it. I've added this task:\n" + t + "\nNow you have " + tasks.getSize() + " tasks in the list.";
+            Task task = new Todo(args);
+            tasks.add(task);
+            return "Got it. I've added this task:\n" + task + "\nNow you have " + tasks.getSize() + " tasks in the list.";
         }
         case DEADLINE -> {
             if (args.isBlank()) {

@@ -1,7 +1,5 @@
 package penguin.ui;
 
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,8 +26,8 @@ public class MainWindow extends AnchorPane {
 
     private Penguin penguin;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image penguinImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/koala.png"));
+    private Image penguinImage = new Image(this.getClass().getResourceAsStream("/images/penguin.png"));
 
     private final String BYE = "Bye. Hope to see you again soon!";
 

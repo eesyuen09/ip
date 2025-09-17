@@ -62,6 +62,14 @@ public class Event extends Task {
         return to.toString();
     }
 
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
+    }
+
     /**
      * Returns a string representation of this event, including its description,
      * completion status, and start/end times.

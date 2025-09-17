@@ -49,6 +49,7 @@ application {
 shadowJar {
     archiveBaseName = "penguin"
     archiveClassifier = null
+    archiveFileName = "penguin.jar"
 }
 
 run{

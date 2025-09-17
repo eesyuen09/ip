@@ -31,6 +31,8 @@ public class Parser {
             return parseCommand("delete", Action.DELETE, trimmedInput);
         } else if (trimmedInput.startsWith("find")) {
             return parseCommand("find", Action.FIND, trimmedInput);
+        } else if (trimmedInput.startsWith("schedule")) {
+            return parseCommand("schedule", Action.SCHEDULE, trimmedInput);
         }
         return new Command(Action.UNKNOWN, trimmedInput);
     }

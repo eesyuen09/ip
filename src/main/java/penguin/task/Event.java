@@ -20,7 +20,7 @@ public class Event extends Task {
         this.to = DateTimeParser.parse(to);
     }
 
-    public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to) throws PenguinException {
+    public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to) {
         super(description, isDone);
         this.from = from;
         this.to = to;

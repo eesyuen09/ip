@@ -19,7 +19,7 @@ public class Deadline extends Task {
         this.by = DateTimeParser.parse(byText.trim());
     }
 
-    public Deadline(String description, boolean done, LocalDateTime by) throws PenguinException {
+    public Deadline(String description, boolean done, LocalDateTime by) {
         super(description, done);
         this.by = by;
     }

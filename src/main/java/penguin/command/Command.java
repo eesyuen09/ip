@@ -1,5 +1,8 @@
 package penguin.command;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import penguin.exception.PenguinException;
 import penguin.task.Deadline;
 import penguin.task.Event;
@@ -7,7 +10,7 @@ import penguin.task.Task;
 import penguin.task.TaskList;
 import penguin.task.Todo;
 
-enum Action {ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN}
+enum Action {ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, DELETE, FIND, SCHEDULE, UNKNOWN}
 
 /**
  * Represents a command that is parsed from user's input.
@@ -38,6 +41,7 @@ public record Command(Action action, String args) {
         case DEADLINE -> { return handleDeadline(tasks); }
         case EVENT -> { return handleEvent(tasks); }
         case FIND -> { return handleFind(tasks); }
+        case SCHEDULE -> { return handleSchedule(tasks); }
         default -> throw new PenguinException("Sorry, I don't understand that.");
         }
     }
@@ -234,6 +238,27 @@ public record Command(Action action, String args) {
             return result.toString();
         } else {
             return "There are no matching results in your list.";
+        }
+    }
+
+    public String handleSchedule(TaskList tasks) throws PenguinException {
+        if (args.isBlank() || args == null) {
+            List<Task> schedule = tasks.getUpcomingSchedules();
+            if (schedule.isEmpty()) {
+                return "You have no upcoming schedules.";
+            }
+            TaskList scheduleList = new TaskList(schedule);
+            return "Here are your upcoming schedules: \n" + scheduleList;
+        } else {
+            LocalDate date;
+            try {
+                date = LocalDate.parse(args.trim());
+            } catch (Exception e) {
+                throw new PenguinException("Invalid date format. Please use yyyy-MM-dd.");
+            }
+            List<Task> schedule = tasks.getScheduleOnDate(date);
+            TaskList scheduleList = new TaskList(schedule);
+            return "Here are your upcoming schedules at " + args + "\n" + scheduleList;
         }
     }
 }

@@ -1,7 +1,12 @@
 package penguin.task;
 
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.Comparator;
 
 /**
  * Represents a mutable list of Task objects.
@@ -9,6 +14,14 @@ import java.util.List;
 public class TaskList {
     private final List<Task> tasks = new ArrayList<>();
     private boolean isModified = false;
+
+    public TaskList(List<Task> tasks) {
+        this.tasks.addAll(tasks);
+    }
+
+    public TaskList() {
+
+    }
 
     /**
      * Adds a task to the list and marks the list as modified.
@@ -59,6 +72,48 @@ public class TaskList {
 
     public boolean isModified() {
         return isModified;
+    }
+
+    public List<Task> getUpcomingSchedules() {
+        LocalDateTime now = LocalDateTime.now();
+        return tasks.stream().filter(t -> t instanceof Deadline || t instanceof Event)
+                .filter(t -> {
+                    if (t instanceof Deadline deadline) {
+                        return !deadline.getBy().isBefore(now);
+                    } else if (t instanceof Event event) {
+                        return !event.getFrom().isBefore(now);
+                    }
+                    return false;
+                })
+                .filter(t -> !t.isDone())
+                .sorted(Comparator.comparing(t -> {
+                    if (t instanceof Deadline deadline) {
+                        return deadline.getBy();
+                    } else {
+                        return ((Event) t).getFrom();
+                    }
+                })).collect(Collectors.toList());
+    }
+
+    public List<Task> getScheduleOnDate(LocalDate date) {
+        assert date != null : "Date must not be null";
+
+        return tasks.stream().filter(t -> t instanceof Deadline || t instanceof Event)
+                .filter(t -> {
+                    if (t instanceof Deadline deadline) {
+                        return deadline.getBy().toLocalDate().isEqual(date);
+                    } else if (t instanceof Event event) {
+                        return event.getFrom().toLocalDate().isEqual(date);
+                    }
+                    return false;
+                }).filter(t -> !t.isDone())
+                .sorted(Comparator.comparing(t -> {
+                    if (t instanceof Deadline deadline) {
+                        return deadline.getBy();
+                    } else {
+                        return ((Event) t).getFrom();
+                    }
+                })).collect(Collectors.toList());
     }
 
     /**

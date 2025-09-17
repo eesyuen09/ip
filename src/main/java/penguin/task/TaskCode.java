@@ -10,31 +10,34 @@ import java.time.LocalDateTime;
  */
 public class TaskCode {
     private static final String SEP = " | ";
+    private static final int TODO_FIELDS = 3;
+    private static final int DEADLINE_FIELDS = 4;
+    private static final int EVENT_FIELDS = 5;
 
     /**
      * Encodes a Task into a storage string.
      *
-     * @param t The task to encode.
+     * @param task The task to encode.
      * @return Encoded string representation of the task.
      * @throws IllegalArgumentException If the task type is not recognized.
      */
-    public static String encode(Task t) {
-        String done = t.isDone() ? "1" : "0";
-        String desc = t.getDescription();
+    public static String encode(Task task) {
+        String done = task.isDone() ? "1" : "0";
+        String desc = task.getDescription();
 
-        if (t instanceof Todo) {
+        if (task instanceof Todo) {
             return "T" + SEP + done + SEP + desc;
-        } else if (t instanceof Deadline d) {
+        } else if (task instanceof Deadline d) {
             return "D" + SEP + done + SEP + desc + SEP + d.getByStorage();     // by as String
-        } else if (t instanceof Event e) {
+        } else if (task instanceof Event e) {
             return "E" + SEP + done + SEP + desc + SEP + e.getFromStorage() + SEP + e.getToStorage();
         }
-        throw new IllegalArgumentException("Unknown task type: " + t.getClass());
+        throw new IllegalArgumentException("Unknown task type: " + task.getClass());
     }
 
     /**
      * Decodes a line of text into a Task.
-     * Ignores null lines and empty lines."|" and reconstructs the
+     * Ignores null lines and empty lines. Split the line by "|" and reconstructs the
      * appropriate Todo, Deadline or Event.
      *
      * @param line A storage line representing a task.
@@ -44,34 +47,34 @@ public class TaskCode {
      * @throws IllegalArgumentException If the "done" flag is not 0 or 1.
      */
     public static Task decode(String line) throws PenguinException {
-        if (line == null) return null;
-        line = line.trim();
-        if (line.isEmpty()) return null;
+        if (line == null || line.trim().isEmpty()) {
+            return null;
+        }
 
-        String[] p = line.split(" \\| ");
-        if (p.length < 3) {
+        String[] fields = line.split(" \\| ");
+        if (fields.length < TODO_FIELDS) {
             throw new PenguinException("Wrong format: " + line);
         }
 
-        String type = p[0];
-        boolean done = parseDone(p[1]);
-        String desc = p[2];
+        String type = fields[0];
+        boolean isDone = parseDone(fields[1]);
+        String desc = fields[2];
 
         switch (type) {
             case "T":
-                if (p.length != 3) throw new PenguinException("Todo task needs 3 fields: " + line);
-                return new Todo(desc, done);
+                if (fields.length != TODO_FIELDS) throw new PenguinException("Todo task needs 3 fields: " + line);
+                return new Todo(desc, isDone);
 
             case "D":
-                if (p.length != 4) throw new PenguinException("Deadline task needs 4 fields: " + line);
-                LocalDateTime by = LocalDateTime.parse(p[3]);
-                return new Deadline(desc, done, by);
+                if (fields.length != DEADLINE_FIELDS) throw new PenguinException("Deadline task needs 4 fields: " + line);
+                LocalDateTime by = LocalDateTime.parse(fields[3]);
+                return new Deadline(desc, isDone, by);
 
             case "E":
-                if (p.length != 5) throw new PenguinException("Event task needs 5 fields: " + line);
-                LocalDateTime from = LocalDateTime.parse(p[3]);
-                LocalDateTime to = LocalDateTime.parse(p[4]);
-                return new Event(desc, done, from, to);
+                if (fields.length != EVENT_FIELDS) throw new PenguinException("Event task needs 5 fields: " + line);
+                LocalDateTime from = LocalDateTime.parse(fields[3]);
+                LocalDateTime to = LocalDateTime.parse(fields[4]);
+                return new Event(desc, isDone, from, to);
 
             default:
                 throw new PenguinException("Unknown task type: " + type);

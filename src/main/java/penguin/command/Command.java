@@ -25,6 +25,8 @@ public record Command(Action action, String args) {
      * @throws PenguinException If there are invalid arguments.
      */
     public String execute(TaskList tasks) throws PenguinException {
+        assert tasks != null : "TaskList must not be null";
+        assert action != null : "Action must not be null";
         switch (action) {
         case ADD -> { return handleAdd(tasks); }
         case DELETE -> { return handleDelete(tasks); }

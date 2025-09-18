@@ -11,28 +11,45 @@ public class Parser {
      * @return Command
      */
     public Command parse(String input) {
-        String s = input.trim();
-        if (s.equals("bye")) {
+        String trimmedInput = input.trim();
+
+        if (trimmedInput.equals("bye")) {
             return new Command(Action.BYE, "");
-        } else if (s.equals("list")) {
+        } else if (trimmedInput.equals("list")) {
             return new Command(Action.LIST, "");
-        } else if (s.startsWith("mark")) {
-            return new Command(Action.MARK, s.length() > 4 ? s.substring(5).trim() : "".trim());
-        } else if (s.startsWith("unmark")) {
-            return new Command(Action.UNMARK, s.length() > 6 ? s.substring(7).trim() : "");
-        } else if (s.startsWith("todo")) {
-            return new Command(Action.TODO, s.length() > 4 ? s.substring(5).trim() : "".trim());
-        } else if (s.startsWith("deadline")) {
-            return new Command(Action.DEADLINE, s.length() > 8 ? s.substring(9).trim() : "".trim());
-        } else if (s.startsWith("event")) {
-            return new Command(Action.EVENT, s.length() > 5 ? s.substring(6).trim() : "".trim());
-        } else if (s.startsWith("delete")) {
-            return new Command(Action.DELETE, s.length() > 6 ? s.substring(7).trim() : "".trim());
-        } else if (s.startsWith("find")) {
-            return new Command(Action.FIND, s.length() > 5 ? s.substring(6).trim() : "".trim());
+        } else if (trimmedInput.startsWith("mark")) {
+            return parseCommand("mark", Action.MARK, trimmedInput);
+        } else if (trimmedInput.startsWith("unmark")) {
+            return parseCommand("unmark", Action.UNMARK, trimmedInput);
+        } else if (trimmedInput.startsWith("todo")) {
+            return parseCommand("todo", Action.TODO, trimmedInput);
+        } else if (trimmedInput.startsWith("deadline")) {
+            return parseCommand("deadline", Action.DEADLINE, trimmedInput);
+        } else if (trimmedInput.startsWith("event")) {
+            return parseCommand("event", Action.EVENT, trimmedInput);
+        } else if (trimmedInput.startsWith("delete")) {
+            return parseCommand("delete", Action.DELETE, trimmedInput);
+        } else if (trimmedInput.startsWith("find")) {
+            return parseCommand("find", Action.FIND, trimmedInput);
+        } else if (trimmedInput.startsWith("schedule")) {
+            return parseCommand("schedule", Action.SCHEDULE, trimmedInput);
         }
-
-        return new Command(Action.UNKNOWN, s.trim());
-
+        return new Command(Action.UNKNOWN, trimmedInput);
     }
+
+    /**
+     * Creates a Command for inputs that begin with a specific keyword.
+     * Extracts the substring after the keyword (if any) as the arguments.
+     *
+     * @param keyword The command keyword (e.g. "todo", "deadline", "event").
+     * @param action  The corresponding Action enum for the keyword.
+     * @param input   The full user input string.
+     * @return A Command containing the action and its extracted arguments.
+     */
+    private Command parseCommand(String keyword, Action action, String input) {
+        return input.length() > keyword.length()
+                ? new Command(action, input.substring(keyword.length() + 1).trim())
+                : new Command(action, "");
+    }
+
 }

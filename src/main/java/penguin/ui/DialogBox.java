@@ -12,6 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -34,7 +37,16 @@ public class DialogBox extends HBox {
         }
 
         dialog.setText(text);
+        dialog.setWrapText(true);
+        dialog.setMinWidth(Region.USE_COMPUTED_SIZE);
+        dialog.setMinHeight(Region.USE_PREF_SIZE);
+        dialog.setMaxWidth(200);
+        dialog.setPrefHeight(Region.USE_COMPUTED_SIZE);
+
+        HBox.setHgrow(dialog, Priority.NEVER);
+
         displayPicture.setImage(img);
+
     }
 
     /**
@@ -45,15 +57,35 @@ public class DialogBox extends HBox {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
         FXCollections.reverse(tmp);
         this.getChildren().setAll(tmp);
+        dialog.getStyleClass().add("reply-label");
     }
 
     public static DialogBox getUserDialog(String s, Image i) {
         return new DialogBox(s, i);
     }
 
-    public static DialogBox getDukeDialog(String s, Image i) {
+    public static DialogBox getPenguinDialog(String s, Image i, String commandType) {
         var db = new DialogBox(s, i);
         db.flip();
+        db.changeDialogStyle(commandType);
         return db;
+    }
+
+    private void changeDialogStyle(String commandType) {
+        if (commandType == null) {
+            return;
+        }
+        switch(commandType) {
+        case "add":
+            dialog.getStyleClass().add("add-label");
+            break;
+        case "mark":
+            dialog.getStyleClass().add("marked-label");
+            break;
+        case "delete":
+            dialog.getStyleClass().add("delete-label");
+            break;
+        default:
+        }
     }
 }

@@ -4,13 +4,13 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import javafx.util.Duration;
 import penguin.Penguin;
 
 /**
@@ -28,16 +28,18 @@ public class MainWindow extends AnchorPane {
 
     private Penguin penguin;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
-    private Image penguinImage = new Image(this.getClass().getResourceAsStream("/images/penguin.jpg"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/koala.png"));
+    private Image penguinImage = new Image(this.getClass().getResourceAsStream("/images/penguin.png"));
 
-    private final String BYE = "Bye. Hope to see you again soon!";
+    private String commandType = "";
+
+    private final String BYE = "Byebye! Hope to see you again!";
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
 
-        dialogContainer.getChildren().addAll(DialogBox.getDukeDialog(Ui.greet(), penguinImage));
+        dialogContainer.getChildren().addAll(DialogBox.getPenguinDialog(Ui.greet(), penguinImage, commandType));
     }
 
     /** Injects the penguin instance */
@@ -53,15 +55,17 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = penguin.getResponse(input);
+        commandType = penguin.getCommandType();
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, penguinImage)
+                DialogBox.getPenguinDialog(response, penguinImage, commandType)
         );
         userInput.clear();
 
-        if (input == "bye") {
-            String reply = Ui.reply(BYE);
-            dialogContainer.getChildren().add(new Label(reply));
+        if ("bye".equals(input)) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 second delay
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
         }
     }
 }

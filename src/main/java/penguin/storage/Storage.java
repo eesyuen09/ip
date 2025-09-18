@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class Storage {
     private final TaskList tasks;
     private final TaskCode code = new TaskCode();
-    private final Path DATA_FILE = Paths.get("data", "penguin.txt");
+    private static final Path DATA_FILE = Paths.get("data", "penguin.txt");
 
     public Storage (TaskList tasks) {
         this.tasks = tasks;
@@ -50,7 +50,7 @@ public class Storage {
     }
 
     /**
-     * Loads tasks from the storage file and return the tasklist.
+     * Loads tasks from the storage file.
      *
      * @return TaskList stored in storage or empty TaskList if no file exists.
      * @throws PenguinException if an I/O error occurs while storing the file.

@@ -20,7 +20,7 @@ public class Event extends Task {
         this.to = DateTimeParser.parse(to);
     }
 
-    public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to) throws PenguinException {
+    public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to) {
         super(description, isDone);
         this.from = from;
         this.to = to;
@@ -62,6 +62,14 @@ public class Event extends Task {
         return to.toString();
     }
 
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
+    }
+
     /**
      * Returns a string representation of this event, including its description,
      * completion status, and start/end times.
@@ -70,7 +78,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + getFromDisplay() + " to: " + getToDisplay() + ")";
+        return "[E]" + super.toString() + "\n  from " + getFromDisplay() + "\n  to " + getToDisplay();
     }
 }
 

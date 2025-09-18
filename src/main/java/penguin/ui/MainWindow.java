@@ -1,14 +1,16 @@
 package penguin.ui;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import javafx.util.Duration;
 import penguin.Penguin;
 
 /**
@@ -31,7 +33,7 @@ public class MainWindow extends AnchorPane {
 
     private String commandType = "";
 
-    private final String BYE = "Bye. Hope to see you again soon!";
+    private final String BYE = "Byebye! Hope to see you again!";
 
     @FXML
     public void initialize() {
@@ -61,8 +63,9 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         if ("bye".equals(input)) {
-            String reply = Ui.reply(BYE);
-            dialogContainer.getChildren().add(new Label(reply));
+            PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 second delay
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
         }
     }
 }

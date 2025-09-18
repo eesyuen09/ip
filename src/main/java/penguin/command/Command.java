@@ -83,7 +83,7 @@ public record Command(Action action, String args) {
         }
         Task t = tasks.get(index);
         tasks.delete(index);
-        return "Noted. I've removed this task:\n" + t
+        return "OK! I've removed this task:\n" + t
                 + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
@@ -94,6 +94,9 @@ public record Command(Action action, String args) {
      * @return String representation of all tasks.
      */
     public String handleList(TaskList tasks) {
+        if (tasks.getSize() < 1) {
+            return "Yay! There are no tasks in your list!";
+        }
         String str = "Here are the tasks in your list:\n";
         return str + tasks.toString();
     }
@@ -130,7 +133,7 @@ public record Command(Action action, String args) {
         int idx = Integer.parseInt(args) - 1;
         Task task = tasks.get(idx);
         task.unmark();
-        return "OK, I've marked this task as not done yet:\n" + task;
+        return "OK! I've unmarked this task:\n" + task;
     }
 
     /**
@@ -140,7 +143,7 @@ public record Command(Action action, String args) {
      * @return Exit message for the user.
      */
     public String handleBye(TaskList tasks) {
-        return "Bye. Hope to see you again soon!";
+        return "Byebye! Hope to see you again!";
     }
 
     /**
@@ -156,7 +159,7 @@ public record Command(Action action, String args) {
         }
         Task task = new Todo(args);
         tasks.add(task);
-        return "Got it. I've added this task:\n" + task + "\nNow you have " + tasks.getSize() + " tasks in the list.";
+        return "OK! I've added this task:\n" + task + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
     /**
@@ -181,7 +184,7 @@ public record Command(Action action, String args) {
         String by = args.substring(index + 3);
         Task task = new Deadline(desc, by);
         tasks.add(task);
-        return "Got it. I've added this task:\n" + task
+        return "OK! I've added this task:\n" + task
                 + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
@@ -203,7 +206,7 @@ public record Command(Action action, String args) {
         }
         Task task = getTask(fromIdx, toIdx);
         tasks.add(task);
-        return "Got it. I've added this task:\n" + task
+        return "OK! I've added this task:\n" + task
                 + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
@@ -245,7 +248,7 @@ public record Command(Action action, String args) {
         if (isFound) {
             return result.toString();
         } else {
-            return "There are no matching results in your list.";
+            return "OOPS! There are no matching results in your list.";
         }
     }
 
@@ -253,7 +256,7 @@ public record Command(Action action, String args) {
         if (args.isBlank() || args == null) {
             List<Task> schedule = tasks.getUpcomingSchedules();
             if (schedule.isEmpty()) {
-                return "You have no upcoming schedules.";
+                return "YAY! You have no upcoming schedules.";
             }
             TaskList scheduleList = new TaskList(schedule);
             return "Here are your upcoming schedules: \n" + scheduleList;

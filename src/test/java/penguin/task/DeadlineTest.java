@@ -18,13 +18,13 @@ public class DeadlineTest {
     @Test
     public void toString_notDoneTask_returnsFormattedString() throws PenguinException {
         Deadline d = new Deadline("read book", "09/09/2025 1800");
-        assertEquals("[D][ ] read book (by: Sep 9 2025, 6:00pm)", d.toString());
+        assertEquals("[D][ ] read book" + "\n      by " + "Sep 9 2025, 6:00pm", d.toString());
     }
 
     @Test
     public void toString_doneTask_returnsFormattedString() throws PenguinException {
         LocalDateTime dt = LocalDateTime.of(2025, 10, 1, 7, 0);
         Deadline d = new Deadline("finish", true, dt);
-        assertEquals("[D][X] finish (by: Oct 1 2025, 7:00am)", d.toString());
+        assertEquals("[D][X] finish" + "\n      by " + "Oct 1 2025, 7:00am", d.toString());
     }
 }

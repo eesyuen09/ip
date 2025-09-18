@@ -15,6 +15,7 @@ public class Penguin {
     private TaskList tasks;
     private final Ui ui;
     private final Parser parser;
+    private String commandType;
 
     public Penguin() {
         ui = new Ui();
@@ -37,6 +38,8 @@ public class Penguin {
         try {
             Command cmd = parser.parse(input);
             String out = cmd.execute(tasks);
+            commandType = cmd.getSimpleName(cmd.getAction());
+
             if (tasks.isModified()) {
                 storage.save(tasks);
                 tasks.resetModification();
@@ -46,6 +49,10 @@ public class Penguin {
         } catch (PenguinException e) {
             return(e.getMessage());
         }
+    }
+
+    public String getCommandType() {
+        return commandType;
     }
 
 }

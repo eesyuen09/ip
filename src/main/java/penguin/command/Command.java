@@ -46,6 +46,14 @@ public record Command(Action action, String args) {
         }
     }
 
+    public String getSimpleName(Action action) {
+        return action.toString().toLowerCase();
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
     /**
      * Adds a generic Task with the given arguments to the task list.
      *

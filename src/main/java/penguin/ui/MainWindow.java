@@ -29,13 +29,15 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/koala.png"));
     private Image penguinImage = new Image(this.getClass().getResourceAsStream("/images/penguin.png"));
 
+    private String commandType = "";
+
     private final String BYE = "Bye. Hope to see you again soon!";
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
 
-        dialogContainer.getChildren().addAll(DialogBox.getDukeDialog(Ui.greet(), penguinImage));
+        dialogContainer.getChildren().addAll(DialogBox.getPenguinDialog(Ui.greet(), penguinImage, commandType));
     }
 
     /** Injects the penguin instance */
@@ -51,13 +53,14 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = penguin.getResponse(input);
+        commandType = penguin.getCommandType();
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, penguinImage)
+                DialogBox.getPenguinDialog(response, penguinImage, commandType)
         );
         userInput.clear();
 
-        if (input == "bye") {
+        if ("bye".equals(input)) {
             String reply = Ui.reply(BYE);
             dialogContainer.getChildren().add(new Label(reply));
         }

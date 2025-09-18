@@ -21,7 +21,7 @@ enum Action {ADD, LIST, MARK, UNMARK, BYE, TODO, DEADLINE, EVENT, DELETE, FIND, 
 public record Command(Action action, String args) {
     /**
      * Execute the action on the tasklist.
-     * The behavior depends on the Action:
+     * The behavior depends on the Action.
      *
      * @param tasks Tasklist to be executed on.
      * @return Response message for users.
@@ -98,7 +98,7 @@ public record Command(Action action, String args) {
             return "Yay! There are no tasks in your list!";
         }
         String str = "Here are the tasks in your list:\n";
-        return str + tasks.toString();
+        return str + tasks;
     }
 
 
@@ -210,6 +210,13 @@ public record Command(Action action, String args) {
                 + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
+    /** Gets a complete Event task.
+     *
+     * @param fromIdx the index of
+     * @param toIdx
+     * @return an Event Task
+     * @throws PenguinException
+    */
     private Task getTask(int fromIdx, int toIdx) throws PenguinException {
         if (fromIdx > toIdx) {
             throw new PenguinException("'from' must come before 'to'.");

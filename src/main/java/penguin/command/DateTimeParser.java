@@ -24,7 +24,7 @@ public final class DateTimeParser {
             return LocalDateTime.parse(text, IN_DATETIME);
         } catch (DateTimeParseException e) {
             throw new PenguinException("Invalid date/time format: " + text
-                    + "Expected dd/MM/yyyy HHmm, e.g., 09/09/2025 1800");
+                    + "\n Expected dd/MM/yyyy HHmm, e.g., 09/09/2025 1800");
         }
     }
 }

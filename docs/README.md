@@ -181,5 +181,5 @@ Closes the chatbot.
 **Usage**  
 bye
 
-**Expected Output**
+**Expected Output**  
 Byebye! Hope to see you again!

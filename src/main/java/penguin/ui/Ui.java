@@ -13,5 +13,4 @@ public class Ui {
     public static String greet() {
         return reply(greetings);
     }
-
 }

@@ -28,7 +28,6 @@ public class Penguin {
         } catch (PenguinException e) {
             tasks = new TaskList();
         }
-
     }
 
     /**

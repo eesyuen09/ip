@@ -49,14 +49,6 @@ public class CommandTest {
         assertEquals("Yay! There are no tasks in your list!", cmd.handleList(tasks));
     }
 
-    // ==== ADD ====
-    @Test
-    void handleAdd_success() {
-        Command cmd = new Command(Action.ADD, "new task");
-        String reply = cmd.handleAdd(tasks);
-        assertTrue(reply.contains("added: new task"));
-    }
-
     // ==== DELETE ====
     @Test
     void handleDelete_validIndex_success() throws PenguinException {

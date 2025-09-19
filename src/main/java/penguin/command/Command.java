@@ -31,7 +31,6 @@ public record Command(Action action, String args) {
         assert tasks != null : "TaskList must not be null";
         assert action != null : "Action must not be null";
         switch (action) {
-        case ADD -> { return handleAdd(tasks); }
         case DELETE -> { return handleDelete(tasks); }
         case LIST -> { return handleList(tasks); }
         case MARK -> { return handleMark(tasks); }
@@ -52,18 +51,6 @@ public record Command(Action action, String args) {
 
     public Action getAction() {
         return action;
-    }
-
-    /**
-     * Adds a generic Task with the given arguments to the task list.
-     *
-     * @param tasks Task list to add the task to.
-     * @return Response message after adding the task.
-     */
-    public String handleAdd(TaskList tasks) {
-        Task task = new Task(args);
-        tasks.add(task);
-        return "added: " + args;
     }
 
     /**

@@ -49,7 +49,7 @@ Adds a task with a due date/time.
 deadline <description> by <dd/MM/yyyy HHmm>
 
 **Example Input**  
-`deadline assignment 1 by 2025-10-10 1800`
+`deadline assignment 1 by 2025/10/10 1800`
 
 **Example Output**  
 > OK! I’ve added this task: \
@@ -64,7 +64,7 @@ Adds a task with a start and end time.
 event < description> from <dd/MM/yyyy HHmm> to <dd/MM/yyyy HHmm>
 
 **Example Input**  
-`event project meeting from 2025-09-20 1400 to 2025-09-20 1600`
+`event project meeting from 2025/09/20 1400 to 2025/09/20 1600`
 
 **Expected Output**  
 >OK! I’ve added this task: \
